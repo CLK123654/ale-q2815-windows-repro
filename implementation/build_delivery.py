@@ -89,6 +89,6 @@ def main():
  (output/'RELEASE-NOTES.md').write_text(
   f"维护窗口为{policy['change_window']['start']}至{policy['change_window']['end']}，影响范围是{policy['impact']}。先处理{stages[0]['stage']}批次，观察{policy['observation_minutes']}分钟，再决定是否处理{stages[1]['stage']}批次。观察{('、'.join(policy['observation_items']))}。异常时{policy['rollback']}。\n",
   encoding='utf-8')
- (output/'README.txt').write_text('chart保存发布Chart，values与renders按发布批次区分。hook_inventory.csv用于清单审查，release_plan.csv交给发布经理安排窗口和批次。渲染结果只证明对象、字段和注解，不代表Job已经执行，也不代表端点返回预期状态。\n',encoding='utf-8')
+ (output/'README.txt').write_text('chart保存发布Chart，values与renders按发布批次区分。hook_inventory.csv供发布经理审阅钩子对象，release_plan.csv用于安排窗口和批次。集群操作人员接手后执行Job并检查端点状态。\n',encoding='utf-8')
  ok['value']=True
 if __name__=='__main__':main()
