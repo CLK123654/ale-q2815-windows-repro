@@ -1,0 +1,40 @@
+{{- range .Values.tests.hooks }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $.Release.Name }}-{{ .jobSuffix }}
+  labels:
+    release-stage: {{ $.Values.release.stage | quote }}
+    release-hook-id: {{ .hookId | quote }}
+  annotations:
+    helm.sh/hook: {{ $.Values.tests.hookEvent | quote }}
+    helm.sh/hook-weight: {{ .weight | quote }}
+    helm.sh/hook-delete-policy: {{ join "," $.Values.tests.deletePolicy | quote }}
+spec:
+  backoffLimit: {{ $.Values.tests.backoffLimit }}
+  activeDeadlineSeconds: {{ $.Values.tests.activeDeadlineSeconds }}
+  template:
+    spec:
+      restartPolicy: {{ $.Values.tests.restartPolicy }}
+      containers:
+        - name: {{ .jobSuffix }}
+          image: {{ printf "%s:%s" $.Values.tests.image.repository $.Values.tests.image.tag }}
+          command:
+            - sh
+            - -ec
+          args:
+            - >-
+              code=$(curl --silent --show-error --output /dev/null --write-out %{http_code}
+              {{- if .requiresToken }} -H "Authorization: Bearer ${RELEASE_PROBE_TOKEN}"{{ end }}
+              {{ printf "http://%s:%v%s" $.Release.Name $.Values.service.port .path }});
+              test "$code" = {{ .expectedStatus | quote }}
+          {{- if .requiresToken }}
+          env:
+            - name: RELEASE_PROBE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.tests.credentialSecret }}
+                  key: {{ $.Values.tests.credentialKey }}
+          {{- end }}
+{{- end }}

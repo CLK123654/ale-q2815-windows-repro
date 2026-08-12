@@ -1,0 +1,5 @@
+支持Windows11。主软件为Helm3.18.4，用于Chart检查、values合并、模板渲染和test hook注解处理。辅助工具为PowerShell7，可用于整理文件和调用Helm，Python3.12可用于读取CSV与JSON并生成values和交付目录，不能替代Helm处理Chart语义。
+
+联网要求为正式操作阶段不访问外部服务，也不需要Kubernetes集群。镜像地址只作为清单字段，不拉取镜像。Helm为开源软件，不需要商业许可；输入材料为自造的脱敏发布样例。
+
+建议使用2核CPU、2GB内存和1GB可写磁盘。执行账号需要读取input_data并新建output的权限。发布策略中的等待预算同时约束测试Job活动时限，批次、窗口、观察和回滚安排以release_policy.json为准。主要风险是把渲染清单误当成集群执行结果，或者让Chart中的公共设置与发布策略分叉。

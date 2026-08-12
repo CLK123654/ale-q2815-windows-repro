@@ -1,0 +1,23 @@
+release:
+  stage: pilot
+workload:
+  image:
+    repository: registry.example.invalid/stream-gateway
+    tag: 2.8.3
+service:
+  port: 8080
+  containerPort: 8080
+tests:
+  image:
+    repository: curlimages/curl
+    tag: 8.10.1
+  credentialSecret: stream-gateway-test-credentials
+  credentialKey: token
+  hookEvent: test
+  deletePolicy:
+    - before-hook-creation
+    - hook-succeeded
+  activeDeadlineSeconds: 45
+  backoffLimit: 0
+  restartPolicy: Never
+  hooks: []

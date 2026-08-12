@@ -1,0 +1,50 @@
+{
+  "skill": "humanizer-zh",
+  "result": "PASS",
+  "reviewed_scopes": [
+    "任务名称",
+    "任务概要",
+    "任务prompt",
+    "关键动作",
+    "评分表",
+    "环境依赖",
+    "软件步骤",
+    "输入材料中的自然语言",
+    "Reference中的用户可见文字",
+    "关键标准答案工作簿全部自然语言",
+    "任务规格工作簿全部自然语言"
+  ],
+  "scores": {
+    "直接性": 10,
+    "节奏": 9,
+    "信任度": 9,
+    "真实性": 9,
+    "精炼度": 9,
+    "total": 46
+  },
+  "minimum_total": 45,
+  "notes": [
+    "标题直接说明要交付的发布清单，删去顺序、留证、重跑清理等评测式概念并列。",
+    "Prompt只保留版本组、发布经理和集群操作人员需要的交接信息，测试器、复演器、固定矩阵和探针运行结果全部移出题目。",
+    "把任务边界限定为Helm Chart检查、values合并与候选清单渲染，没有声称Job或HTTP请求已运行。",
+    "维护窗口、影响、等待预算、批次、观察和回滚全部来自release_policy.json，其他数字可追溯到输入表。",
+    "逐段复读后未发现宣传腔、伪引用、模糊归因、断裂输入或没有消费者的交付物。"
+  ],
+  "reviewed_artifacts_sha256": {
+    "任务名称.txt": "896c902108cb06776454e5d8fe2bcc1cad47899b55867b8e0f08240420a788ef",
+    "任务概要.txt": "4823370f0e32de89e3ecaa62b82d77599cd60ef28e1802d4eadeccd0e7e2a413",
+    "任务prompt.txt": "3d937da76ed087a7b136913d0fa557c8d8a3eaacc156d6743feb44bc0797b5ab",
+    "关键动作.txt": "f191db04923ca33d5d131347f37763bcd9b456814181e2f56978ca198a5cd725",
+    "评分表.txt": "86f7bd9975b1d65387dcf1e9346ab49cbd9e9810216cc419aa143c8c8ed70b76",
+    "环境依赖.txt": "7a60b22bf60e2529073e220723ea1849c3f63a34a8734310de0feffaed86ebec",
+    "相关专业软件的关键步骤.txt": "673dccd33eb7abe001f6804a2e9baaffad2b02c54c41d2b17ff7942f5e6a4219",
+    "task_fields.json": "cb8f42462a446e69fe6b9f8af7db50d5383d78410750effe67a4cb51cfb7e90a",
+    "输入数据包.zip": "577d7c3e5a99ac0c9523c17b03e6f4c807cc8c96e1423bbcf9005fc5333099f3",
+    "reference.zip": "cbc6187d5a7a75696d9eb6f4773b2a22cf033bfc83be9808f060dbf6769822f2",
+    "关键标准答案.xlsx": "fd45b4c8f7078128719efd10be4ae7d39cc4488ed703309e116956552a769751",
+    "任务规格转化.xlsx": "a6673f57be30bce9ce96b325c505ddd09e05c855009fa3c468c02ba0da963b6d",
+    "ALE-专家数据作业表_q2815.csv": "748b8274f0713f830bced396fc56e71f7ec7d03771bb7cf0709de5e0c20bcf10"
+  },
+  "online_ai_field_used_as_conclusion": false,
+  "reviewed_on": "2026-08-12"
+}

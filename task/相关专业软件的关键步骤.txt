@@ -1,0 +1,7 @@
+1. 读取service_values.csv、hook_catalog.csv和release_policy.json，核对批次顺序、钩子字段及公共设置。
+2. 在Chart的values与Schema中建立批次、工作负载、Service和测试钩子入口。
+3. 将钩子目录渲染为带Helm test注解的Job，并配置权重、凭据引用、删除策略和运行边界。
+4. 分别生成pilot与production的values，使用对应发布名和命名空间执行helm lint --strict。
+5. 对两个批次执行helm template，把Service、Deployment和Job候选清单保存到renders目录。
+6. 从输入与候选清单整理hook_inventory.csv和release_plan.csv，复核对象字段与发布策略。
+7. 编写RELEASE-NOTES.md和README.txt，交代批次安排、观察、回滚以及离线清单的使用边界。

@@ -1,2 +1,3 @@
-# ale-q2815-windows-repro
-Q2815 independent Windows reproduction
+# 消息入口测试钩子发布清单
+
+本仓库保存一道独立任务及其公开验证材料。业务题目和四个附件位于task目录，Windows工作流在独立环境运行Helm并核对完整交付物。
