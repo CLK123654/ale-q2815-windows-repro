@@ -4,4 +4,4 @@ input_data中的service_values.csv给出发布名、命名空间、镜像和端�
 
 请使用Helm整理Chart。把批次字段写入各自values，把目录中的钩子转成带Helm test注解的Job，并让凭据引用、删除策略、等待时限、重试和重启设置服从发布策略。工作负载的Service与Deployment需要继续保留。Chart完成后，对两个批次分别执行严格lint并用对应发布名和命名空间渲染候选清单，再整理钩子对象目录与发布安排。
 
-交付output/chart/stream-gateway、output/values、output/renders、output/reports、output/RELEASE-NOTES.md和output/README.txt。README.txt要说清各目录由谁使用，也要提醒后续团队，离线渲染只说明对象、字段和注解已经形成，不能当作Job执行结果或端点状态。环境支持Windows11，Helm从PowerShell运行。
+交付output/chart/stream-gateway、output/values、output/renders、output/reports、output/RELEASE-NOTES.md和output/README.txt。README.txt要说清各目录由谁使用。发布经理先看Chart和候选清单，集群操作人员在维护窗内执行钩子并查看端点状态。

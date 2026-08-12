@@ -1,15 +1,19 @@
-检查项：交付目录完整
+总分100分
+
+1. 交付目录完整
+分值：10分
 标准答案：交付物路径与关键标准答案中的清单逐项一致，文件均可读取
 关键字段：output/chart/stream-gateway、output/values、output/renders、output/reports、output/RELEASE-NOTES.md、output/README.txt
 容差：路径精确匹配，来源为Prompt交付要求
 失败边界：任一核心目录或声明文件缺失、损坏或无法解析
-可观察证据：从reference.zip根目录展开文件树并打开对应文件
+可观察证据：从output根目录展开文件树并打开对应文件
 客观硬性标准：交付清单中的路径全部存在且格式可读取
 阈值：清单逐项全部通过
 优先级：Gate项
 所属层级：L1任务指令遵循层
 
-检查项：业务输入全部进入交付链
+2. 业务输入全部进入交付链
+分值：10分
 标准答案：两个发布批次来自service_values.csv，测试Job来自hook_catalog.csv，公共设置与发布安排来自release_policy.json，starter_chart的Service与Deployment仍在交付Chart中
 关键字段：output/values、output/renders、output/reports/hook_inventory.csv、output/reports/release_plan.csv、output/chart/stream-gateway/templates
 容差：业务键和字段精确匹配，YAML键序与缩进不参与比较
@@ -20,7 +24,8 @@
 优先级：Gate项
 所属层级：L3输入数据导入与完整性层
 
-检查项：Chart可由Helm处理
+3. Chart可由Helm处理
+分值：10分
 标准答案：Helm3.18.4对两个批次执行helm lint --strict均返回0，helm template均返回0并生成可解析清单
 关键字段：output/chart/stream-gateway、output/values/pilot.yaml、output/values/production.yaml、output/renders
 容差：Helm退出码精确匹配0，版本来源为环境依赖
@@ -31,7 +36,8 @@
 优先级：Gate项
 所属层级：L2软件或工具操作层
 
-检查项：批次values与清单一致
+4. 批次values与清单一致
+分值：12分
 标准答案：pilot与production的stage、发布名、命名空间、镜像和端口逐项取自service_values.csv；每份清单包含对应Service与Deployment
 关键字段：service_values.csv、output/values、output/renders、output/reports/release_plan.csv
 容差：字符串与整数精确匹配，YAML表示形式允许等价变化
@@ -42,7 +48,8 @@
 优先级：高权重项
 所属层级：L5多源关联与字段一致性层
 
-检查项：测试Job目录正确
+5. 测试Job目录正确
+分值：14分
 标准答案：每个发布批次都为hook_catalog.csv中的每个hook_id生成一个batch/v1Job，名称后缀、权重、路径、预期状态和凭据需求与目录一致
 关键字段：hook_catalog.csv、output/renders、output/reports/hook_inventory.csv
 容差：按stage与hook_id组成集合比较，权重和状态码精确匹配
@@ -53,7 +60,8 @@
 优先级：高权重项
 所属层级：L7产物结构或Schema或专业对象层
 
-检查项：钩子公共设置符合发布策略
+6. 钩子公共设置符合发布策略
+分值：14分
 标准答案：Job的helm.sh/hook、helm.sh/hook-delete-policy、activeDeadlineSeconds、backoffLimit和restartPolicy取自release_policy.json；需要凭据的Job引用指定Secret与键，不需要凭据的Job不添加该引用
 关键字段：release_policy.json、output/renders中的Job元数据和Pod模板
 容差：结构化字段精确匹配，删除策略按集合比较
@@ -64,7 +72,8 @@
 优先级：高权重项
 所属层级：L6领域计算与专业规则层
 
-检查项：发布安排可追溯
+7. 发布安排可追溯
+分值：12分
 标准答案：release_plan.csv按rollout_order列出pilot与production，维护窗口、影响、等待预算、观察时长、观察项和回滚文本来自release_policy.json；RELEASE-NOTES.md表达同一安排
 关键字段：release_policy.json、output/reports/release_plan.csv、output/RELEASE-NOTES.md
 容差：CSV字段精确匹配，说明文字允许自然改写但业务值不能变化
@@ -75,18 +84,20 @@
 优先级：普通项
 所属层级：L9跨产物一致性与可追溯层
 
-检查项：离线清单边界表述准确
-标准答案：output/README.txt说明Chart、values、renders和reports的用途，并明确渲染结果不能证明Job已执行或端点已返回预期状态
+8. 候选清单职责说明
+分值：10分
+标准答案：output/README.txt说明Chart、values、renders和reports的用途，并把Job执行与端点检查交给集群操作人员
 关键字段：output/README.txt
-容差：允许自然措辞变化，必须保留用途、使用者和能力边界三类信息
-失败边界：缺少任一目录用途，声称离线Helm已经执行Job，或声称HTTP结果已经发生
-可观察证据：读取README.txt并定位目录说明和边界说明
-客观硬性标准：说明与实际交付路径一致，且没有超出Helm lint和template可观察范围
-阈值：三类信息全部存在且无错误结论
+容差：允许自然措辞变化，必须保留用途、使用者和现场职责三类信息
+失败边界：缺少任一目录用途，或没有说明集群操作人员接手Job与端点检查
+可观察证据：读取README.txt并定位目录说明和岗位分工
+客观硬性标准：说明与实际交付路径及维护窗岗位分工一致
+阈值：三类信息全部存在
 优先级：普通项
 所属层级：L8运行验证或可执行行为层
 
-检查项：交付物未夹带运行凭据
+9. 交付物未夹带运行凭据
+分值：8分
 标准答案：Chart与渲染清单只含release_policy.json指定的Secret名称和键，不含凭据值，不创建Secret对象
 关键字段：output/chart、output/values、output/renders
 容差：对象类型和敏感字段精确搜索
